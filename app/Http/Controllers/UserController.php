@@ -33,7 +33,7 @@ class UserController extends Controller
             'email_verified_at' => date('Y-m-d H:i:s', time()),
         ];
 
-        
+        // dd($data);
         //jika sudah ada email user tidak ditambahkan jika tidak ada maka akan ditambahkan
         $user = User::firstOrCreate(['email' => $data['email']], $data);
         Auth::login($user, true);
