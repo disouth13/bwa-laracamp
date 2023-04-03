@@ -1,3 +1,13 @@
+/* untuk menghide scroll pada browser chrome */
+::-webkit-scrollbar{
+  display: none;
+}
+
+/* untuk menghide scroll pada browser firefox */
+html{
+  scrollbar-width: none;
+}
+
 body {
   font-family: 'Poppins', sans-serif;
 }
