@@ -21,10 +21,12 @@
                     <a class="nav-link" href="#">Business</a>
                 </li>
             </ul>
-            <div class="d-flex user-logged">
-                <a href="#">
-                    Halo, Beatrice!
-                    <img src="{{ asset('assets/frontend/images/user_photo.png') }}" class="user-photo" alt="">
+            <div class="d-flex">
+                <a href="{{ route('login') }}" class="btn btn-master btn-secondary me-3">
+                    Sign In
+                </a>
+                <a href="#" class="btn btn-master btn-primary">
+                    Sign Up
                 </a>
             </div>
         </div>
