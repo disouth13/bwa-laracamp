@@ -20,6 +20,7 @@
 <body>
 
     @include('includes.navbar')
+    {{-- @include('layouts.navigation') --}}
 
     @yield('content-frontend')
 

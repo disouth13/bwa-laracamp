@@ -21,6 +21,14 @@
                     <a class="nav-link" href="#">Business</a>
                 </li>
             </ul>
+            @auth
+            <div class="d-flex user-logged">
+                <a href="">
+                    Halo, {{ Auth::user()->name }}
+                    <img src="{{ Auth::user()->avatar }}" class="user-photo">
+                </a>
+            </div>
+            @else
             <div class="d-flex">
                 <a href="{{ route('login') }}" class="btn btn-master btn-secondary me-3">
                     Sign In
@@ -29,6 +37,8 @@
                     Sign Up
                 </a>
             </div>
+            @endauth
+            
         </div>
     </div>
 </nav>

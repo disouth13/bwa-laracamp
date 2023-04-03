@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,13 @@ Route::get('/checkout', function () {
 Route::get('/success-checkout', function () {
     return view('pages.success-checkout');
 })->name('success-checkout');
+
+
+// sign googel
+Route::get('login-google', [UserController::class, 'LoginGoogle'])->name('login-google');
+
+// handle provider callback setelah login
+Route::get('auth/google/callback', [UserController::class, 'HandleProviderCallback'])->name('user-google-callback');
 
 
 
