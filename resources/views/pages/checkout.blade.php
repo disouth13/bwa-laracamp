@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('content-frontend')
+
+
+
 <section class="checkout">
     <div class="container">
         <div class="row text-center pb-70">
