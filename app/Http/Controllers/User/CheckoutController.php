@@ -25,9 +25,13 @@ class CheckoutController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Camps $camp)
+    public function create(Camps $camp, Request $request)
     {
-        //
+        //validasi
+        if($camp->isRegistered) {
+            $request->session()->flash('error', "You already registered on {$camp->title} camp.");
+            return redirect()->route('home-dashboard');
+        }
         
         return view('pages.frontend.checkout.checkout', [
             'camp'  => $camp
@@ -45,8 +49,8 @@ class CheckoutController extends Controller
         //mapping request data
         $data = $request->all();
         
-        $data['users_id'] = Auth::id();
-        $data['camps_id'] = $camp->id;
+        $data['user_id'] = Auth::id();
+        $data['camp_id'] = $camp->id;
 
         // update user data
         $user = Auth::user();

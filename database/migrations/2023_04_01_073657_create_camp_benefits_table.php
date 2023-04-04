@@ -18,7 +18,7 @@ class CreateCampBenefitsTable extends Migration
             // cara 1 relasi
             //$table->bigInteger('camps_id')->unsigned();
             //$table->unsignedBigInteger('camps_id');
-            $table->foreignId('camps_id')->constrained();
+            $table->foreignId('camp_id')->constrained();
             $table->string('name');
             $table->timestamps();
 

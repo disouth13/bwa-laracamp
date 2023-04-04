@@ -17,41 +17,41 @@ class CampBenefitsTableSeeder extends Seeder
         //
         $campBenefits = [
             [
-                'camps_id' => 1,
+                'camp_id' => 1,
                 'name' => 'One to One Mentor'
 
             ],
             [
-                'camps_id' => 1,
+                'camp_id' => 1,
                 'name' => 'Materi permanent'
                 
             ],
             [
-                'camps_id' => 1,
+                'camp_id' => 1,
                 'name' => 'Certificate'
                 
             ],
 
             [
-                'camps_id' => 2,
+                'camp_id' => 2,
                 'name' => 'One to One Mentor'
                 
             ],
 
             [
-                'camps_id' => 2,
+                'camp_id' => 2,
                 'name' => 'Materi Full Update'
                 
             ],
 
             [
-                'camps_id' => 1,
+                'camp_id' => 1,
                 'name' => 'Certificate'
                 
             ],
 
             [
-                'camps_id' => 1,
+                'camp_id' => 1,
                 'name' => 'Free Kaos'
                 
             ],
