@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
+use App\Http\Requests\User\Checkout\ValidasiStore;
+
 class CheckoutController extends Controller
 {
     /**
@@ -27,6 +29,8 @@ class CheckoutController extends Controller
      */
     public function create(Camps $camp, Request $request)
     {
+
+
         //validasi
         if($camp->isRegistered) {
             $request->session()->flash('error', "You already registered on {$camp->title} camp.");
@@ -44,8 +48,11 @@ class CheckoutController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Camps $camp)
+    public function store(ValidasiStore $request, Camps $camp)
     {
+
+        // validasi store
+        return $request->all();
         //mapping request data
         $data = $request->all();
         
