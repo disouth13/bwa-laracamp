@@ -32,4 +32,10 @@ class Checkout extends Model
     {
         return $this->belongsTo(Camps::class);
     }
+
+    // relasi user
+    public function User(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 }

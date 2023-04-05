@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
+use Mail;
+use App\Mail\Checkout\mailAfterCheckout;
+
 use App\Http\Requests\User\Checkout\ValidasiStore;
 
 class CheckoutController extends Controller
@@ -51,8 +54,9 @@ class CheckoutController extends Controller
     public function store(ValidasiStore $request, Camps $camp)
     {
 
-        // validasi store
-        return $request->all();
+        // // validasi store
+        // return $request->all();
+
         //mapping request data
         $data = $request->all();
         
@@ -68,6 +72,9 @@ class CheckoutController extends Controller
 
         // create chcekout
         $checkout = Checkout::create($data);
+
+        // send email after checkout
+        Mail::to(Auth::user()->email)->send(new mailAfterCheckout($checkout));
 
         return redirect()->route('checkout-success');
     }
@@ -121,5 +128,11 @@ class CheckoutController extends Controller
     public function success()
     {
         return view('pages.frontend.checkout.success-checkout');
+    }
+
+    // get invoice
+    public function invoice(Checkout $checkout)
+    {
+        return $checkout;
     }
 }

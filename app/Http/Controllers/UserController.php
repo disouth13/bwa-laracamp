@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 
+
+use Mail;
+use App\Mail\User\mailAfterRegister;
+
 class UserController extends Controller
 {
     //login
@@ -35,7 +39,15 @@ class UserController extends Controller
 
         // dd($data);
         //jika sudah ada email user tidak ditambahkan jika tidak ada maka akan ditambahkan
-        $user = User::firstOrCreate(['email' => $data['email']], $data);
+        // $user = User::firstOrCreate(['email' => $data['email']], $data);
+
+        // menggunakan email notification
+        $user = User::whereEmail($data['email'])->first();
+        // cek user jika tidak ada email maka akan di create baru sebagai register
+        if(!$user){
+            $user = User::create($data);
+            Mail::to($user->email)->send(new mailAfterRegister($user));
+        }
         Auth::login($user, true);
 
         return redirect(route('welcome'));
