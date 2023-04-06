@@ -57,6 +57,20 @@
                                 @endif
                             </div>
                             <div class="mb-4">
+                                <label class="form-label">Phone</label>
+                                <input name="phone" type="text" class="form-control {{ $errors->has('phone') ? 'is-invalid' : '' }}" value="{{ old('phone') ?: Auth::user()->phone }}" required>
+                                @if ($errors->has('phone'))
+                                    <p class="text-danger">{{ $errors->first('phone') }}</p>
+                                @endif
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label">Address</label>
+                                <input name="address" type="text" class="form-control {{ $errors->has('address') ? 'is-invalid' : '' }}" value="{{ old('address') ?: Auth::user()->address }}" required>
+                                @if ($errors->has('address'))
+                                    <p class="text-danger">{{ $errors->first('address') }}</p>
+                                @endif
+                            </div>
+                            <div class="mb-4">
                                 <label class="form-label">Card Number</label>
                                 <input name="card_number" type="number" class="form-control {{ $errors->has('card_number') ? 'is-invalid' : '' }}" value="{{ old('card_number') ?: '' }}" required>
                                 @if ($errors->has('card_number'))

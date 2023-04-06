@@ -20,6 +20,10 @@ class CreateCheckoutsTable extends Migration
             $table->string('card_number', 20);
             $table->date('expired');
             $table->string('cvc', 3);
+            $table->string('payment_status')->nullable();
+            $table->string('midtrans_url')->nullable();
+            $table->string('midtrans_code_booking')->nullable();
+            
             $table->boolean('status_paid')->default(false);
 
             $table->softDeletes();
