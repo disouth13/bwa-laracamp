@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\User;
 
+
 use Mail;
 use Midtrans;
 use Midtrans\Snap;
+use Midtrans\Config;
+
 use App\Models\Camps;
 use App\Models\Checkout;
 
@@ -13,7 +16,6 @@ use Illuminate\Http\Request;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-
 use App\Mail\Checkout\mailAfterCheckout;
 use App\Http\Requests\User\Checkout\ValidasiStore;
 
@@ -24,10 +26,10 @@ class CheckoutController extends Controller
     // config midtrans
         public function __construct()
         {
-            Midtrans\Config::$serverKey = env('MIDTRANS_SERVERKEY');
-            Midtrans\Config::$isProduction = env('MIDTRANS_IS_PRODUCTION');
-            Midtrans\Config::$isSanitized = env('MIDTRANS_IS_SANITIZED');
-            Midtrans\Config::$is3ds = env('MIDTRANS_IS_3DS');
+            Config::$serverKey = env('MIDTRANS_SERVERKEY');
+            Config::$isProduction = env('MIDTRANS_IS_PRODUCTION');
+            Config::$isSanitized = env('MIDTRANS_IS_SANITIZED');
+            Config::$is3ds = env('MIDTRANS_IS_3DS');
         }
 
 
@@ -93,10 +95,10 @@ class CheckoutController extends Controller
         $checkout = Checkout::create($data);
 
         // midtrans
-        //$this->getSnapMidtransRedirect($checkout);
+        $this->getSnapMidtransRedirect($checkout);
 
         // send email after checkout
-        Mail::to(Auth::user()->email)->send(new mailAfterCheckout($checkout));
+        // Mail::to(Auth::user()->email)->send(new mailAfterCheckout($checkout));
 
         return redirect()->route('checkout-success');
     }
@@ -166,16 +168,17 @@ class CheckoutController extends Controller
         // variable
         $orderID = $checkout->id.'-'.Str::random(6);
         $price = $checkout->Camp->price * 1000;
+        
         $checkout->midtrans_booking_code = $orderID;
 
         $transaction_details = [
-            'order_id' => $orderID,
-            'gross_amount' => $price,
+            'order_id'      => $orderID,
+            'gross_amount'  => $price,
         ];
 
         $item_details[] = [
             'id'            => $orderID,
-            'gross_amount'  => $price,
+            'price'         => $price,
             'quantity'      => 1,
             'name'          => "Payment for {$checkout->Camp->title} Camp",
 
@@ -222,7 +225,8 @@ class CheckoutController extends Controller
      */
     public function midtransCallback(Request $request)
     {
-        $notif = new Midtrans\Notification();
+        // midtrans post dan get kondisional
+        $notif = $request->method() == 'POST' ? new Midtrans\Notification() : Midtrans\Transaction::status($request->order_id);
 
         $transaction_status = $notif->transaction_status;
         $fraud = $notif->fraud_status;

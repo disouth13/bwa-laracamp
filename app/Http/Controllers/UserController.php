@@ -46,7 +46,9 @@ class UserController extends Controller
         // cek user jika tidak ada email maka akan di create baru sebagai register
         if(!$user){
             $user = User::create($data);
-            Mail::to($user->email)->send(new mailAfterRegister($user));
+
+            // mail send
+            //Mail::to($user->email)->send(new mailAfterRegister($user));
         }
         Auth::login($user, true);
 

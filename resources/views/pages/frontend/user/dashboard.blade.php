@@ -36,14 +36,13 @@
                             <strong>{{ $item->Camp->price }}k</strong>
                         </td>
                         <td>
-                            @if ($item->status_paid)
-                                <p class="mt-2"></p>
-                                <strong class="text-success">Payment Success</strong>
-                            @else
-                                <p class="mt-2"></p>
-                                <strong>Waiting Payment</strong>
+                            <p class="mt-2"></p>
+                            <strong>{{ $item->payment_status }}</strong>
+                        </td>
+                        <td>
+                            @if ($item->payment_status == 'waiting')
+                                <a href="{{ $item->midtrans_url }}" class="btn btn-primary">Pay Here</a>
                             @endif
-                            
                         </td>
                         <td>
                             <a href="https://wa.me/08xxxxxxx?text=Hi, saya ingin bertanya tentang kelas {{ $item->Camp->title }}" class="btn btn-primary">

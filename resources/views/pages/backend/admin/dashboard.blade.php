@@ -18,7 +18,7 @@
                                     <th>Price</th>
                                     <th>Registerd Date</th>
                                     <th>Paid Status</th>
-                                    <th>Action</th>
+                                    
                                 </tr>
                             </thead>
                             <tbody>
@@ -29,22 +29,10 @@
                                         <td>{{ $item->Camp->price }}</td>
                                         <td>{{ $item->created_at->format('M d Y') }}</td>
                                         <td>
-                                            @if ($item->status_paid)
-                                                <span class="badge bg-success">Paid</span>
-                                            @else
-                                                <span class="badge bg-warning">Waiting Payment</span>
-                                            @endif    
-                                        </td>
-                                        <td>
-                                            @if (!$item->status_paid)
-                                                <form action="{{ route('admin.admin-checkout-update', $item->id) }}" method="POST">
-                                                    @csrf
-                                                    <button class="btn btn-primary btn-sm">Set Paid</button>
-                                                </form>
-                                            @else
-                                            <img src="{{ asset('assets/frontend/images/ic_check.svg') }}" alt="">
-                                            Payment Success   
+                                            @if ($item->payment_status == 'waiting')
+                                                <strong><span class="btn btn-warning btn-sm">Warning</span></strong>
                                             @endif
+                                            
                                         </td>
                                     </tr>
                                 @empty
