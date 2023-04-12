@@ -11,9 +11,10 @@ use Midtrans\Config;
 use App\Models\Camps;
 use App\Models\Checkout;
 
+use App\Models\Discount;
 use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Mail\Checkout\mailAfterCheckout;
@@ -78,6 +79,7 @@ class CheckoutController extends Controller
 
         //mapping request data
         $data = $request->all();
+
         
         $data['user_id'] = Auth::id();
         $data['camp_id'] = $camp->id;
@@ -91,9 +93,17 @@ class CheckoutController extends Controller
         $user->address = $data['address'];
         $user->save();
 
+        // check discount
+        if ($request->discount) {
+            $discount = Discount::whereCode($request->discount)->first();
+            $data['discount_id'] = $discount->id;
+            $data['discount_precentage'] = $discount->precentage;
+        }
+
         // create chcekout
         $checkout = Checkout::create($data);
 
+        return $checkout;
         // midtrans
         $this->getSnapMidtransRedirect($checkout);
 

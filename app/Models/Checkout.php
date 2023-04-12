@@ -15,10 +15,13 @@ class Checkout extends Model
     protected $fillable = [
         'user_id',
         'camp_id',
+        'discount_id',
         'card_number',
         'expired',
         'cvc',
         'status_paid',
+        'discount_precentage',
+        'total',
     ];
 
     // setting date expired
