@@ -31,6 +31,9 @@
                                         <td>
                                             @if ($item->payment_status == 'waiting')
                                                 <strong><span class="btn btn-warning btn-sm">Warning</span></strong>
+                                            @else 
+                                            <img src="{{ asset('assets/frontend/images/ic_check.svg') }}" alt="">
+                                            <strong>success</strong>
                                             @endif
                                             
                                         </td>

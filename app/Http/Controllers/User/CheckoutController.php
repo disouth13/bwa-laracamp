@@ -103,7 +103,6 @@ class CheckoutController extends Controller
         // create chcekout
         $checkout = Checkout::create($data);
 
-        return $checkout;
         // midtrans
         $this->getSnapMidtransRedirect($checkout);
 
@@ -181,10 +180,6 @@ class CheckoutController extends Controller
         
         $checkout->midtrans_booking_code = $orderID;
 
-        $transaction_details = [
-            'order_id'      => $orderID,
-            'gross_amount'  => $price,
-        ];
 
         $item_details[] = [
             'id'            => $orderID,
@@ -193,6 +188,29 @@ class CheckoutController extends Controller
             'name'          => "Payment for {$checkout->Camp->title} Camp",
 
         ];
+
+        // menghitung discount pada midtrans Discount = relasi discount
+        $discountPrice = 0;
+        if ($checkout->Discount) {
+            // rumus discount
+            $discountPrice = $price * $checkout->discount_precentage / 100;
+            $item_details[] = [
+                'id'            => $checkout->Discount->code,
+                'price'         => -$discountPrice,
+                'quantity'      => 1,
+                'name'          => "Discount {$checkout->Discount->name} ({$checkout->discount_precentage}%)",
+    
+            ];
+        }
+
+        $total = $price - $discountPrice;
+
+        $transaction_details = [
+            'order_id'      => $orderID,
+            'gross_amount'  => $total,
+        ];
+
+
 
         $userData = [
             "first_name" => $checkout->User->name,
@@ -220,6 +238,7 @@ class CheckoutController extends Controller
             // get snap payment url
             $paymentUrl = Snap::createTransaction($midtrans_params)->redirect_url;
             $checkout->midtrans_url = $paymentUrl;
+            $checkout->total = $total;
             $checkout->save();
 
             return $paymentUrl;
@@ -285,6 +304,7 @@ class CheckoutController extends Controller
 
         // save
         $checkout->save();
-        return view('checkout/success');
+        // return view('checkout/success');
+        return view('pages.frontend.checkout.success-checkout');
     }
 }

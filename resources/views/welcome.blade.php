@@ -190,130 +190,47 @@
             </div>
             <div class="col-lg-7 col-12">
                 <div class="row">
+                    @foreach ($camps as $item)
+                        
+                    
                     <div class="col-lg-6 col-12">
                         <div class="table-pricing paket-gila">
-                            <p class="story text-center">
-                                ADVANCED BOOTCAMP
+                            <p class="story text-center text-uppercase">
+                                {{ $item->title }}
                             </p>
                             <h1 class="price text-center">
-                                $280K
+                                {{ $item->price  }}
                             </h1>
+
+                            @php
+                                $campBen = DB::table('camps')
+                                            ->join('camp_benefits', 'camps.id', '=', 'camp_benefits.camp_id')
+                                            ->select('camp_benefits.name')
+                                            ->where('camps.id', $item->id)
+                                            ->get();
+                            @endphp
+                            @foreach ($campBen as $itemBen)
+                            
                             <div class="item-benefit-pricing mb-4">
                                 <img src="{{ asset('assets/frontend/images/ic_check.svg') }}" alt="">
                                 <p>
-                                    Pro Techstack Kit
+                                    {{ $itemBen->name }}
                                 </p>
                                 <div class="clear"></div>
                                 <div class="divider"></div>
-                            </div>
-                            <div class="item-benefit-pricing mb-4">
-                                <img src="{{ asset('assets/frontend/images/ic_check.svg') }}" alt="">
-                                <p>
-                                    iMac Pro 2021 & Display
-                                </p>
-                                <div class="clear"></div>
-                                <div class="divider"></div>
-                            </div>
-                            <div class="item-benefit-pricing mb-4">
-                                <img src="{{ asset('assets/frontend/images/ic_check.svg') }}" alt="">
-                                <p>
-                                    1-1 Mentoring Program
-                                </p>
-                                <div class="clear"></div>
-                                <div class="divider"></div>
-                            </div>
-                            <div class="item-benefit-pricing mb-4">
-                                <img src="{{ asset('assets/frontend/images/ic_check.svg') }}" alt="">
-                                <p>
-                                    Final Project Certificate
-                                </p>
-                                <div class="clear"></div>
-                                <div class="divider"></div>
-                            </div>
-                            <div class="item-benefit-pricing mb-4">
-                                <img src="{{ asset('assets/frontend/images/ic_check.svg') }}" alt="">
-                                <p>
-                                    Offline Course Videos
-                                </p>
-                                <div class="clear"></div>
-                                <div class="divider"></div>
-                            </div>
-                            <div class="item-benefit-pricing mb-4">
-                                <img src="{{ asset('assets/frontend/images/ic_check.svg') }}" alt="">
-                                <p>
-                                    Future Job Opportinity
-                                </p>
-                                <div class="clear"></div>
-                                <div class="divider"></div>
-                            </div>
-                            <div class="item-benefit-pricing mb-4">
-                                <img src="{{ asset('assets/frontend/images/ic_check.svg') }}" alt="">
-                                <p>
-                                    Premium Design Kit
-                                </p>
-                                <div class="clear"></div>
-                                <div class="divider"></div>
-                            </div>
-                            <div class="item-benefit-pricing">
-                                <img src="{{ asset('assets/frontend/images/ic_check.svg') }}" alt="">
-                                <p>
-                                    Website Builder
-                                </p>
-                                <div class="clear"></div>
-                            </div>
+                            </div>    
+                            @endforeach
                             <p>
-                                <a href="{{ route('checkout-create', 'advanced-bootcamp') }}" class="btn btn-master btn-primary w-100 mt-3">
+                                <a href="{{ route('checkout-create',$item->slug) }}" class="btn btn-master btn-primary w-100 mt-3">
                                     Take This Plan
                                 </a>
                             </p>
                         </div>
                     </div>
-                    <div class="col-lg-6 col-12">
-                        <div class="table-pricing paket-biasa">
-                            <p class="story text-center">
-                                EXPERT BOOTCAMP
-                            </p>
-                            <h1 class="price text-center">
-                                $140K
-                            </h1>
-                            <div class="item-benefit-pricing mb-4">
-                                <img src="{{ asset('assets/frontend/images/ic_check.svg') }}" alt="">
-                                <p>
-                                    1-1 Mentoring Program
-                                </p>
-                                <div class="clear"></div>
-                                <div class="divider"></div>
-                            </div>
-                            <div class="item-benefit-pricing mb-4">
-                                <img src="{{ asset('assets/frontend/images/ic_check.svg') }}" alt="">
-                                <p>
-                                    Final Project Certificate
-                                </p>
-                                <div class="clear"></div>
-                                <div class="divider"></div>
-                            </div>
-                            <div class="item-benefit-pricing mb-4">
-                                <img src="{{ asset('assets/frontend/images/ic_check.svg') }}" alt="">
-                                <p>
-                                    Offline Course Videos
-                                </p>
-                                <div class="clear"></div>
-                                <div class="divider"></div>
-                            </div>
-                            <div class="item-benefit-pricing">
-                                <img src="{{ asset('assets/frontend/images/ic_check.svg') }}" alt="">
-                                <p>
-                                    Future Job Opportinity
-                                </p>
-                                <div class="clear"></div>
-                            </div>
-                            <p>
-                                <a href="{{ route('checkout-create', 'expert-bootcamp') }}" class="btn btn-master btn-secondary w-100 mt-3">
-                                    Start With This Plan
-                                </a>
-                            </p>
-                        </div>
-                    </div>
+                    
+                   
+
+                    @endforeach
                 </div>
             </div>
         </div>

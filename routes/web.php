@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\User\LandingController;
 use App\Http\Controllers\User\CheckoutController;
 use App\Http\Controllers\Admin\DiscountController;
 use App\Http\Controllers\Admin\CheckoutController as AdminCheckout;
@@ -21,11 +22,10 @@ use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('welcome');
+Route::get('/', [LandingController::class, 'LandingIndex'])->name('welcome');
 
 
+// Route::get('/', [LandingController::class, 'LandingIndex'])->name('welcome');
 
 
 
@@ -51,10 +51,11 @@ Route::middleware(['auth'])->group(function () {
 
     // route homecontroller
     Route::get('dashboard', [HomeController::class, 'dashboard'])->name('home-dashboard');
-
+    
     // user dashboard
     Route::prefix('user/dashboard')->namespace('User')->name('user.')->middleware('userRole:user')->group(function(){
         Route::get('/', [UserDashboard::class, 'index'])->name('dashboard');
+        
     });
 
      // admin dashboard

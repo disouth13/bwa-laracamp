@@ -3,10 +3,13 @@
 namespace App\Models;
 
 use App\Models\Checkout;
+use App\Models\CampBenefit;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Camps extends Model
 {
@@ -27,4 +30,5 @@ class Camps extends Model
 
         return Checkout::whereCampId($this->id)->whereUserId(Auth::id())->exists();
     }
+
 }

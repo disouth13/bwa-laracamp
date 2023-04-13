@@ -37,11 +37,21 @@
                         </td>
                         <td>
                             <p class="mt-2"></p>
-                            <strong>{{ $item->payment_status }}</strong>
+                            <strong>
+                                {{ $item->total }}
+                                @if ($item->discount_id)
+                                    <span class="badge bg-success" style="margin-right: 20px;">Disc {{ $item->discount_precentage }}% </span>
+                                    
+                                @endif
+                            </strong>
+                            
                         </td>
+                    
                         <td>
                             @if ($item->payment_status == 'waiting')
                                 <a href="{{ $item->midtrans_url }}" class="btn btn-primary">Pay Here</a>
+                            @else
+                            <strong>{{ $item->payment_status }}</strong>
                             @endif
                         </td>
                         <td>
